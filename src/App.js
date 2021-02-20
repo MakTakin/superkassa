@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {connect} from 'react-redux'
+import classes from './App.module.css';
+import {togleStateProps} from "./redux/actions";
 
-function App() {
+function App(props) {
+    const togleState = () => {
+        const valueOfState =  props.state == 'OFF' ? 'ON' : 'OFF'
+        props.togleStateProps(valueOfState)
+    }
+    const cls = [classes.Btn]
+    if (props.state === 'ON') {
+        cls.push(classes.BtnColor)
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.App}>
+        <button className={cls.join(' ')} onClick={() => togleState()}>{props.state}</button>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return{
+        state: state.state
+    }
+}
+
+const mapDispatchToProps = {
+    togleStateProps
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
