@@ -1,15 +1,15 @@
-import {BTN_CHANGE} from "./action-type";
+import {BTN_TOGGLE} from "./action-type";
 
 const initiallState = {
-    state: 'OFF'
+    status: 'OFF'
 }
 
 export const rootReducer = (state = initiallState, action) => {
     switch (action.type) {
-        case BTN_CHANGE:
+        case BTN_TOGGLE:
             return {
                 ...state,
-                state: action.payload
+                status: action.payload
             }
         default:
             return state

@@ -1,10 +1,8 @@
-import {BTN_CHANGE} from "./action-type";
+import {BTN_TOGGLE} from "./action-type";
 
-
-export const togleStateProps = (state) => {
+export const toggleStatus = (state) => {
     return {
-        type: BTN_CHANGE,
+        type: BTN_TOGGLE,
         payload: state
     }
-
 }

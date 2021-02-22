@@ -1,1 +1,1 @@
-export const BTN_CHANGE = 'BTN_CHANGE'
+export const BTN_TOGGLE = 'BTN_TOGGLE'
