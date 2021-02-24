@@ -2,7 +2,6 @@ const Router = require('express')
 const router = Router()
 const Status = require('../models/status')
 
-
 router.get('/', async (req, res) => {
     try {
         const value = await Status.findAll()
@@ -27,8 +26,7 @@ router.post('/toggle', async (req, res) => {
             }
         )
         res.sendStatus(200)
-    } catch
-        (e) {
+    } catch (e) {
         console.log(e)
         res.status(500).json({
             message: 'Server error'

@@ -1,11 +1,4 @@
-import { BTN_TOGGLE, FETCH_FAILED, FETCH_LOADING, FETCH_SUCCESS } from './action-type';
-
-// export const toggleStatus = ( state ) => {
-//     return {
-//         type: BTN_TOGGLE,
-//         payload: state
-//     }
-// }
+import { STATUS_TOGGLE, FETCH_FAILED, FETCH_LOADING, FETCH_SUCCESS } from './action-type';
 
 export const fetchLoading = () => {
     return {
@@ -14,7 +7,6 @@ export const fetchLoading = () => {
 }
 
 export const fetchSuccess = ( status ) => {
-    console.log(status)
     return {
         type: FETCH_SUCCESS,
         payload: status
@@ -25,5 +17,12 @@ export const fetchFailed = ( error ) => {
     return {
         type: FETCH_FAILED,
         payload: error
+    }
+}
+
+export const toggleStatus = ( status ) => {
+    return {
+        type: STATUS_TOGGLE,
+        payload: status
     }
 }
