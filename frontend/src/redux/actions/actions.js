@@ -1,4 +1,4 @@
-import { STATUS_TOGGLE, FETCH_FAILED, FETCH_LOADING, FETCH_SUCCESS } from './action-type';
+import { STATUS_TOGGLE, FETCH_FAILED, FETCH_LOADING, FETCH_SUCCESS } from './types';
 
 export const fetchLoading = () => {
     return {

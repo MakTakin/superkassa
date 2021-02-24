@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { SERVER_URL } from './constants/constants';
-import { fetchFailed, fetchLoading, fetchSuccess, toggleStatus } from './redux/actions';
-import styled from 'styled-components'
+import { fetchFailed, fetchLoading, fetchSuccess, toggleStatus } from './redux/actions/actions';
+import { fetchStatus } from './api/fetchStatus';
 import Loader from './components/loader/loader';
+import styled from 'styled-components'
 
 const Container = styled.div`
     display: flex;
@@ -27,57 +28,41 @@ function App() {
     const status = useSelector(state => state.status)
     const loading = useSelector(state => state.loading)
 
-    const doFetch = useCallback(() => {
+    const getStatus = useCallback(async () => {
         dispatch(fetchLoading())
-        fetch(`${SERVER_URL}`)
-        .then( require => require.json())
-        .then( status => {
-            const [ state ] = status
+        try {
+            const status = await fetch(`${SERVER_URL}`)
+            const [ state ] = await status.json()
             dispatch(fetchSuccess(state.value))
-        })
-        .catch( error => {
-            dispatch(fetchFailed(error))
-        })
+        }   catch (error) {
+                dispatch(fetchFailed(error))
+        }
     }, [])
 
-    const toggleStatusBTN = ( status ) => {
-        fetch(`${SERVER_URL}/toggle`, {
-            method: 'POST',
-            body: JSON.stringify({ status }),
-            headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-            }
-        })
-        .then( response => {
-            if ( response.ok ) {
-                dispatch(toggleStatus(status))
-            }
-        })
-        .catch( error => {
-            dispatch(fetchFailed(error))
-        })
+    const toggleStatusBTN = async ( status ) => {
+        try {
+            await fetchStatus(`${SERVER_URL}/toggle`, status)
+            dispatch(toggleStatus(status))
+        }   catch (error) {
+                dispatch(fetchFailed(error))
+        }
     }
 
     useEffect(() => {
-        doFetch()
-    }, [ status, doFetch ])
+        getStatus()
+    }, [ status, getStatus ])
 
-    if (loading) {
-        return (
-            <Container>
-                <Loader/>
-            </Container>
-        )
-    }
     return (
         <Container>
-            <Button
-                color={ status }
-                onClick={() => toggleStatusBTN(status == 'OFF' ? 'ON' : 'OFF')}
-            >
-                { status }
-            </Button>
+            {loading ?
+                <Loader/> :
+                <Button
+                    color={status}
+                    onClick={() => toggleStatusBTN(status == 'OFF' ? 'ON' : 'OFF')}
+                >
+                    {status}
+                </Button>
+            }
         </Container>
     );
 }

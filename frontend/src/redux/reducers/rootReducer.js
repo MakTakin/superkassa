@@ -1,7 +1,6 @@
-import { STATUS_TOGGLE, FETCH_FAILED, FETCH_LOADING, FETCH_SUCCESS } from './action-type';
+import { STATUS_TOGGLE, FETCH_FAILED, FETCH_LOADING, FETCH_SUCCESS } from '../actions/types';
 
 const initiallState = {
-    status: 'OFF',
     loading: false,
     error: ''
 }
@@ -15,6 +14,7 @@ export const rootReducer = (state = initiallState, action) => {
             }
 
         case FETCH_SUCCESS:
+        case STATUS_TOGGLE:
             return {
                 ...state,
                 status: action.payload,
@@ -25,13 +25,6 @@ export const rootReducer = (state = initiallState, action) => {
             return {
                 ...state,
                 error: action.payload,
-                loading: false
-            }
-
-        case STATUS_TOGGLE:
-            return {
-                ...state,
-                status: action.payload,
                 loading: false
             }
 

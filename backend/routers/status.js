@@ -3,6 +3,7 @@ const router = Router()
 const Status = require('../models/status')
 
 router.get('/', async (req, res) => {
+
     try {
         const value = await Status.findAll()
         res.status(200).json(value)
@@ -15,7 +16,6 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/toggle', async (req, res) => {
-    console.log(req.body)
     try {
         await Status.update({
             value: req.body.status},
