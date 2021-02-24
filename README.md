@@ -1,8 +1,8 @@
-#Toggle button app
+# Toggle button app
 
 In this project i used React + Redux ( Frontend) NodeJs + PostgresSql (backend)
 
-![demo](frontend/assets/demo.JPG)
+![demo](frontend/assets/demo.jpg)
 
 you can start app:
 
